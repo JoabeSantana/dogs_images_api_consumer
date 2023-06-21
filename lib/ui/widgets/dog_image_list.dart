@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:dogs_images_api_consumer/models/dog.dart';
@@ -7,9 +8,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DogImageList extends StatelessWidget {
-  const DogImageList({super.key, required this.images, required this.qtdeImagesGrid});
+  const DogImageList(
+      {super.key, required this.dogs, required this.qtdeImagesGrid});
 
-  final List<Dog> images;
+  final List<Dog> dogs;
   final int qtdeImagesGrid;
 
   @override
@@ -20,15 +22,33 @@ class DogImageList extends StatelessWidget {
         mainAxisSpacing: 1,
         crossAxisSpacing: 1,
       ),
-      itemCount: images.length,
+      itemCount: dogs.length,
       itemBuilder: (context, index) {
         return GestureDetector(
           onTap: () {
-            onTapImage(context, images[index].image);
+            onTapImage(context, dogs[index]);
           },
-          child: Image.network(
-            images[index].image,
-            fit: qtdeImagesGrid == 1 ? BoxFit.contain : BoxFit.cover,
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              Image.network(
+                dogs[index].imageUrl,
+                fit: qtdeImagesGrid == 1 ? BoxFit.contain : BoxFit.cover,
+                width: double.infinity,
+                height: double.infinity,
+              ),
+              Container(
+                height: 30,
+                width: double.infinity,
+                color: Colors.black.withOpacity(0.5),
+                alignment: Alignment.center,
+                child: Text(
+                  dogs[index].breeds.first.name,
+                  maxLines: 1,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
           ),
         );
       },
@@ -36,14 +56,14 @@ class DogImageList extends StatelessWidget {
   }
 }
 
-onTapImage(BuildContext context, String url) {
+onTapImage(BuildContext context, Dog dog) {
   Navigator.of(context).push(
     Platform.isIOS
         ? CupertinoPageRoute(
-            builder: (context) => ImagePageIos(imageUrl: url),
+            builder: (context) => ImagePageIos(dog: dog),
           )
         : MaterialPageRoute(
-            builder: (context) => ImagePageAndroid(imageUrl: url),
+            builder: (context) => ImagePageAndroid(dog: dog),
           ),
   );
 }

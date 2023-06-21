@@ -1,5 +1,5 @@
 import 'package:dogs_images_api_consumer/constantes.dart';
-import 'package:dogs_images_api_consumer/datasources/remote/dog_image_helper.dart';
+import 'package:dogs_images_api_consumer/datasources/remote/dog_helper.dart';
 import 'package:dogs_images_api_consumer/models/dog.dart';
 import 'package:dogs_images_api_consumer/ui/widgets/dog_image_list.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,7 +15,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var qtdeImagesGrid = 3;
   var listView = false;
-  DogImageHelper helper = DogImageHelper();
+
+  DogHelper helper = DogHelper();
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +55,7 @@ class _HomePageState extends State<HomePage> {
             GestureDetector(
               onTap: () {
                 setState(() {
-                  helper = DogImageHelper();
+                  helper = DogHelper();
                 });
               },
               child: const Icon(
@@ -68,13 +69,14 @@ class _HomePageState extends State<HomePage> {
       ),
       child: SafeArea(
         child: FutureBuilder<List<Dog>>(
-          future: helper.listar,
+          future: helper.listOfDogs,
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return Text('Error: ${snapshot.error.toString()}');
-            } else if (snapshot.hasData) {
+            } else if (snapshot.hasData &&
+                snapshot.connectionState == ConnectionState.done) {
               return DogImageList(
-                images: snapshot.data!,
+                dogs: snapshot.data!,
                 qtdeImagesGrid: qtdeImagesGrid,
               );
             } else {

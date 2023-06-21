@@ -1,23 +1,23 @@
-import 'package:dogs_images_api_consumer/constantes.dart';
+import 'package:dogs_images_api_consumer/datasources/remote/dog_helper.dart';
+import 'package:dogs_images_api_consumer/models/dog.dart';
+import 'package:dogs_images_api_consumer/ui/widgets/dog_datails.dart';
 import 'package:flutter/cupertino.dart';
 
 class ImagePageIos extends StatelessWidget {
-  const ImagePageIos({super.key, required this.imageUrl});
+  ImagePageIos({super.key, required this.dog});
 
-  final String imageUrl;
+  final Dog dog;
+
+  final DogHelper helper = DogHelper();
 
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar:
-          const CupertinoNavigationBar(middle: Text(Constantes.namePageDogDetail)),
+          CupertinoNavigationBar(middle: Text(dog.breeds.first.name)),
       child: SafeArea(
         child: Center(
-          child: Image.network(
-            imageUrl,
-            width: double.infinity,
-            fit: BoxFit.fill,
-          ),
+          child: DogDetails(dog: dog, helper: helper),
         ),
       ),
     );
