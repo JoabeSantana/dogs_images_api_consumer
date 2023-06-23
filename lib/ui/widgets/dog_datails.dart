@@ -22,8 +22,6 @@ class DogDetails extends StatelessWidget {
             children: [
               Image.network(
                 snapshot.data!.imageUrl,
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.width,
                 fit: BoxFit.cover,
                 loadingBuilder: (context, child, loadingProgress) {
                   return loadingProgress == null
@@ -31,15 +29,65 @@ class DogDetails extends StatelessWidget {
                       : const CircularProgressIndicator();
                 },
               ),
-              Text('lifeSpan: ${dog.breeds.first.lifeSpan}'),
-              Text(dog.breeds.first.name),
-              Text('temperament: ${dog.breeds.first.temperament}'),
-              Text(dog.breeds.first.height.imperial),
-              Text(dog.breeds.first.weight.imperial),
-              Text('Bred For: ${dog.breeds.first.bredFor}'),
-              Text('Bred Group: ${dog.breeds.first.breedGroup}'),
-              Text('Bred ID: ${dog.breeds.first.id}'),
-              Text('DOG ID: ${dog.id}')
+              Padding(
+                padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('Height'),
+                            Text(
+                              dog.breeds.first.height.imperial,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            const Padding(padding: EdgeInsets.all(5)),
+                            const Text('Bred Group'),
+                            Text(
+                              '${dog.breeds.first.breedGroup}',
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('Weight'),
+                            Text(dog.breeds.first.weight.imperial,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold))
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('Life Span'),
+                            Text('${dog.breeds.first.lifeSpan}',
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold))
+                          ],
+                        )
+                      ],
+                    ),
+                    const Padding(
+                        padding: EdgeInsets.only(top: 10, bottom: 10)),
+                    const Text('Sumary',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20)),
+                    const Padding(
+                        padding: EdgeInsets.only(bottom: 10)),
+                    Text(
+                        'A dog of a temperament ${dog.breeds.first.temperament?.toLowerCase()} of a breed for ${dog.breeds.first.bredFor?.toLowerCase()}.')
+                  ],
+                ),
+              ),
             ],
           );
         } else {
