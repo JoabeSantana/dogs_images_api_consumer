@@ -1,6 +1,7 @@
 import 'package:dogs_images_api_consumer/constantes.dart';
 import 'package:dogs_images_api_consumer/datasources/remote/dog_helper.dart';
 import 'package:dogs_images_api_consumer/models/dog.dart';
+import 'package:dogs_images_api_consumer/ui/android/profile_info_page.dart';
 import 'package:dogs_images_api_consumer/ui/widgets/dog_image_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,19 @@ class _HomePageState extends State<HomePage> {
           },
         ),
         actions: <Widget>[
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) {
+                  return const ProfileInfoPage();
+                },
+              ));
+            },
+            child: const Padding(
+              padding: EdgeInsets.only(top: 5, right: 15),
+              child: Icon(Icons.info_outline),
+            ),
+          ),
           GestureDetector(
             onTap: () {
               setState(() {

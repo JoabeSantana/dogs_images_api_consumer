@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProfileInfoPage extends StatelessWidget {
@@ -5,12 +6,9 @@ class ProfileInfoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('About'),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
+    return CupertinoPageScaffold(
+      navigationBar: const CupertinoNavigationBar(middle: Text('About')),
+      child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -21,12 +19,12 @@ class ProfileInfoPage extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
+                    Navigator.of(context).push(CupertinoPageRoute(
                       builder: (context) {
-                        return Scaffold(
-                          appBar: AppBar(),
+                        return CupertinoPageScaffold(
+                          navigationBar: const CupertinoNavigationBar(),
                           backgroundColor: Colors.black,
-                          body:
+                          child:
                               Center(child: Image.asset('images/joabe.jpeg')),
                         );
                       },
@@ -58,7 +56,6 @@ class ProfileInfoPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 30, left: 30, top: 25),
               child: Column(
-                
                 children: [
                   Container(
                     width: double.infinity,
@@ -95,19 +92,33 @@ class ProfileInfoPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Padding(padding: EdgeInsets.only(top: 10)),
-                  const Center(
-                    child: AboutListTile(
-                      icon: Icon(Icons.info_outline),
-                      applicationVersion: '1.0.0.0',
-                      applicationName: 'Dogs Breeds',
-                      aboutBoxChildren: [
-                        Text(
-                            'An App to list images of Dogs and show information of each Dogs Breeds'),
-                      ],
-                      child: Text('About this App'),
-                    ),
-                  ),
+                  const Padding(padding: EdgeInsets.only(top: 25)),
+                  CupertinoButton(
+                      color: CupertinoColors.activeBlue,
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.info_outline),
+                          Padding(padding: EdgeInsets.only(right: 5)),
+                          Text('About this App'),
+                        ],
+                      ),
+                      onPressed: () {
+                        showCupertinoDialog(
+                          context: context,
+                          builder: (context) => CupertinoAlertDialog(
+                            title: Text('Dogs Breeds'),
+                            content: Text(
+                                'An App to list images of Dogs and show information of each Dogs Breeds'),
+                            actions: [
+                              CupertinoDialogAction(
+                                child: Text('Close'),
+                                onPressed: () => Navigator.pop(context),
+                              )
+                            ],
+                          ),
+                        );
+                      }),
                 ],
               ),
             ),

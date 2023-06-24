@@ -15,7 +15,7 @@ class ImagePageAndroid extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(dog.breeds.first.name)),
       body: SafeArea(
-        child: Center(
+        child: SingleChildScrollView(
           child: DogDetails(dog: dog, helper: helper),
         ),
       ),

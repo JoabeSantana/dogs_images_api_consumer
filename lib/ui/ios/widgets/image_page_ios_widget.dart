@@ -16,7 +16,7 @@ class ImagePageIos extends StatelessWidget {
       navigationBar:
           CupertinoNavigationBar(middle: Text(dog.breeds.first.name)),
       child: SafeArea(
-        child: Center(
+        child: SingleChildScrollView(
           child: DogDetails(dog: dog, helper: helper),
         ),
       ),

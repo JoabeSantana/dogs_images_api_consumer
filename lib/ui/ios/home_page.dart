@@ -2,6 +2,7 @@ import 'package:dogs_images_api_consumer/constantes.dart';
 import 'package:dogs_images_api_consumer/datasources/remote/dog_helper.dart';
 import 'package:dogs_images_api_consumer/models/dog.dart';
 import 'package:dogs_images_api_consumer/ui/widgets/dog_image_list.dart';
+import 'package:dogs_images_api_consumer/ui/ios/profile_info_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -29,6 +30,20 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.end,
           mainAxisSize: MainAxisSize.min,
           children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(CupertinoPageRoute(
+                  builder: (context) {
+                    return const ProfileInfoPage();
+                  },
+                ));
+              },
+              child: const Icon(CupertinoIcons.info, size: 25, color: Colors.white,),
+            ),
+            const Padding(
+              padding: EdgeInsets.all(5),
+              child: SizedBox(),
+            ),
             GestureDetector(
               onTap: () {
                 setState(() {
