@@ -18,6 +18,12 @@ class _HomePageState extends State<HomePage> {
   var listView = false;
   DogHelper helper = DogHelper();
 
+  Future refresh() async {
+    setState(() {
+      helper = DogHelper();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,36 +77,28 @@ class _HomePageState extends State<HomePage> {
                     ),
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                helper = DogHelper();
-              });
-            },
-            child: const Padding(
-              padding: EdgeInsets.only(top: 5, right: 15),
-              child: Icon(CupertinoIcons.refresh),
-            ),
-          ),
         ],
       ),
-      body: FutureBuilder<List<Dog>>(
-        future: helper.listOfDogs,
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error.toString()}');
-          } else if (snapshot.hasData &&
-              snapshot.connectionState == ConnectionState.done) {
-            return DogImageList(
-              dogs: snapshot.data!,
-              qtdeImagesGrid: qtdeImagesGrid,
-            );
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
+      body: RefreshIndicator(
+        onRefresh: refresh,
+        child: FutureBuilder<List<Dog>>(
+          future: helper.listOfDogs,
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error.toString()}');
+            } else if (snapshot.hasData &&
+                snapshot.connectionState == ConnectionState.done) {
+              return DogImageList(
+                dogs: snapshot.data!,
+                qtdeImagesGrid: qtdeImagesGrid,
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
+        ),
       ),
     );
   }
