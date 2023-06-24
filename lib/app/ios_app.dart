@@ -11,7 +11,7 @@ class IosApp extends StatelessWidget {
       home: HomePage(),
       theme: CupertinoThemeData(
           barBackgroundColor: CupertinoColors.black,
-          scaffoldBackgroundColor: CupertinoColors.black),
+          scaffoldBackgroundColor: CupertinoColors.darkBackgroundGray),
     );
   }
 }
