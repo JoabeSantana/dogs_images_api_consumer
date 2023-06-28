@@ -43,7 +43,7 @@ class _HomePageAndroidState extends State<HomePageAndroid> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(Constantes.nomeApp),
+        title: const Text(Constantes.appName),
         centerTitle: true,
         leading: Builder(
           builder: (context) {
