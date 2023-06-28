@@ -1,9 +1,8 @@
-import 'dart:ffi';
 import 'dart:io';
 
 import 'package:dogs_images_api_consumer/models/dog.dart';
-import 'package:dogs_images_api_consumer/ui/android/widgets/image_page_android_widget.dart';
-import 'package:dogs_images_api_consumer/ui/ios/widgets/image_page_ios_widget.dart';
+import 'package:dogs_images_api_consumer/ui/android/image_page_android_widget.dart';
+import 'package:dogs_images_api_consumer/ui/ios/image_page_ios_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

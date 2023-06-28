@@ -1,4 +1,4 @@
-import 'package:dogs_images_api_consumer/ui/ios/home_page.dart';
+import 'package:dogs_images_api_consumer/ui/ios/home_page_ios.dart';
 import 'package:flutter/cupertino.dart';
 
 class IosApp extends StatelessWidget {
@@ -8,7 +8,7 @@ class IosApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const CupertinoApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: HomePageIos(),
       theme: CupertinoThemeData(
           barBackgroundColor: CupertinoColors.black,
           scaffoldBackgroundColor: CupertinoColors.darkBackgroundGray),

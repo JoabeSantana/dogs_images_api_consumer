@@ -1,4 +1,4 @@
-import 'package:dogs_images_api_consumer/ui/android/home_page.dart';
+import 'package:dogs_images_api_consumer/ui/android/home_page_android.dart';
 import 'package:flutter/material.dart';
 
 class AndroidApp extends StatelessWidget {
@@ -13,7 +13,7 @@ class AndroidApp extends StatelessWidget {
         colorScheme: const ColorScheme.dark(), 
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: const HomePageAndroid(),
     );
   }
 }

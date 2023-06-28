@@ -50,7 +50,7 @@ class DogDetails extends StatelessWidget {
                             const Padding(padding: EdgeInsets.all(5)),
                             const Text('Bred Group'),
                             Text(
-                              '${dog.breeds.first.breedGroup}',
+                              dog.breeds.first.breedGroup ?? 'None',
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold),
                             ),
@@ -84,7 +84,7 @@ class DogDetails extends StatelessWidget {
                     const Padding(
                         padding: EdgeInsets.only(bottom: 10)),
                     Text(
-                        'A dog of a temperament ${dog.breeds.first.temperament?.toLowerCase()} of a breed for ${dog.breeds.first.bredFor?.toLowerCase()}.')
+                        'A dog of a temperament ${dog.breeds.first.temperament?.toLowerCase()}.\n${dog.breeds.first.bredFor != null && dog.breeds.first.bredFor!.isNotEmpty ? 'A breed for ${dog.breeds.first.bredFor}.' : ''}')
                   ],
                 ),
               ),

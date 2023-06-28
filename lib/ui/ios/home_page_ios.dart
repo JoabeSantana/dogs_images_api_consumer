@@ -2,22 +2,31 @@ import 'package:dogs_images_api_consumer/constantes.dart';
 import 'package:dogs_images_api_consumer/datasources/remote/dog_helper.dart';
 import 'package:dogs_images_api_consumer/models/dog.dart';
 import 'package:dogs_images_api_consumer/ui/widgets/dog_image_list.dart';
-import 'package:dogs_images_api_consumer/ui/ios/profile_info_page.dart';
+import 'package:dogs_images_api_consumer/ui/ios/profile_info_page_ios.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
+class HomePageIos extends StatefulWidget {
+  const HomePageIos({super.key});
+  
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePageIos> createState() => _HomePageIosState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageIosState extends State<HomePageIos> {
   var qtdeImagesGrid = 3;
   var listView = false;
+  final int sizeList = 50;
 
   DogHelper helper = DogHelper();
+
+  late Future<List<Dog>> dogsList;
+
+  @override
+  void initState() {
+    super.initState();
+    dogsList = helper.listDogs(sizeList);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +34,7 @@ class _HomePageState extends State<HomePage> {
       navigationBar: CupertinoNavigationBar(
         leading: Image.asset('images/dog-api-logo.png',
             color: Colors.white, width: 25),
-        middle: const Text(Constantes.nomeApp),
+        middle: const Text(Constantes.appName),
         trailing: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           mainAxisSize: MainAxisSize.min,
@@ -34,11 +43,15 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 Navigator.of(context).push(CupertinoPageRoute(
                   builder: (context) {
-                    return const ProfileInfoPage();
+                    return const ProfileInfoPageIos();
                   },
                 ));
               },
-              child: const Icon(CupertinoIcons.info, size: 25, color: Colors.white,),
+              child: const Icon(
+                CupertinoIcons.info,
+                size: 25,
+                color: Colors.white,
+              ),
             ),
             const Padding(
               padding: EdgeInsets.all(5),
@@ -70,7 +83,7 @@ class _HomePageState extends State<HomePage> {
             GestureDetector(
               onTap: () {
                 setState(() {
-                  helper = DogHelper();
+                  dogsList = helper.listDogs(sizeList);
                 });
               },
               child: const Icon(
@@ -83,23 +96,30 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       child: SafeArea(
-        child: FutureBuilder<List<Dog>>(
-          future: helper.listOfDogs,
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error.toString()}');
-            } else if (snapshot.hasData &&
-                snapshot.connectionState == ConnectionState.done) {
-              return DogImageList(
-                dogs: snapshot.data!,
-                qtdeImagesGrid: qtdeImagesGrid,
-              );
-            } else {
-              return const Center(
-                child: CircularProgressIndicator(color: Colors.white),
-              );
-            }
-          },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            FutureBuilder<List<Dog>>(
+              future: dogsList,
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error.toString()}');
+                } else if (snapshot.hasData &&
+                    snapshot.connectionState == ConnectionState.done) {
+                  return Expanded(
+                    child: DogImageList(
+                      dogs: snapshot.data!,
+                      qtdeImagesGrid: qtdeImagesGrid,
+                    ),
+                  );
+                } else {
+                  return const Center(
+                    child: CupertinoActivityIndicator(color: Colors.white),
+                  );
+                }
+              },
+            ),
+          ],
         ),
       ),
     );
