@@ -55,7 +55,7 @@ Future<List<Dog>> _listDogs(int sizeList) async {
           'live_dmpsGnerefTPjX2XGbKpxZ4zzHdefPoDZ5HPdoKi0qiQ5JtUfLtf6Py2xCCs4yxA'
     },
     Uri.parse(
-        'https://api.thedogapi.com/v1/images/search?size=thumb&has_breeds=true&limit=${sizeList}'),
+        'https://api.thedogapi.com/v1/images/search?size=thumb&has_breeds=true&limit=$sizeList'),
   );
 
   if (response.statusCode == 200) {
