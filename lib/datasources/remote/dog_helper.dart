@@ -6,8 +6,6 @@ import 'package:dogs_images_api_consumer/models/weight.dart';
 import 'package:http/http.dart' as http;
 
 class DogHelper {
-  
-  //late Future<List<Dog>> listOfDogs;
 
   Future<List<Breed>> listOfBreeds = _listAllDogsBreeds();
 
@@ -28,9 +26,9 @@ Future<List<Dog>> _listDogsByID(int id, int listSize) async {
   StringBuffer url = StringBuffer();
   url.write(
       'https://api.thedogapi.com/v1/images/search?size=thumb&has_breeds=true');
-  
+
   url.write('&limit=$listSize');
-  
+
   if (id > 0) {
     url.write('&breed_ids=${id.toString()}');
   }
@@ -42,7 +40,12 @@ Future<List<Dog>> _listDogsByID(int id, int listSize) async {
     },
     Uri.parse(url.toString()),
   );
-  return _fetchDogsList(response.body);
+
+  if (response.statusCode == 200) {
+    return _fetchDogsList(response.body);
+  }
+
+  return <Dog>[];
 }
 
 Future<List<Dog>> _listDogs(int sizeList) async {
@@ -54,7 +57,12 @@ Future<List<Dog>> _listDogs(int sizeList) async {
     Uri.parse(
         'https://api.thedogapi.com/v1/images/search?size=thumb&has_breeds=true&limit=${sizeList}'),
   );
-  return _fetchDogsList(response.body);
+
+  if (response.statusCode == 200) {
+    return _fetchDogsList(response.body);
+  }
+
+  return <Dog>[];
 }
 
 Future<List<Breed>> _listAllDogsBreeds() async {
